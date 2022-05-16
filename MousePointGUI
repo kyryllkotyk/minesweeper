@@ -1,0 +1,43 @@
+import javax.swing.*;
+import java.awt.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+
+public class MousePointGUI extends MouseInputAdapter{
+   public int x, y, click;
+   public static void main(String[] args){
+      MousePointGUI gui = new MousePointGUI();
+   }
+   
+   private JFrame frame;
+   private JLabel label;
+   
+   public MousePointGUI(){
+      label = new JLabel();
+      label.setText("Move the mouse over me!");
+      
+      label.addMouseListener(this);
+      label.addMouseMotionListener(this);
+      
+      frame = new JFrame();
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setSize(new Dimension(200,100));
+      frame.setTitle("A frame");
+      frame.add(label);
+      frame.setVisible(true);
+   }
+   //Makes a panel that tells you that a mouse is pressed. Also use to record x and y of the click.
+      public void mousePressed(MouseEvent event){
+              x = event.getX();
+              y = event.getY();
+              click = event.getButton();
+      }
+      
+      public whatToDo(){
+         if
+      }
+   //   public int[] gridValue(){
+   //       
+   //   } 
+ //NOTE: NEED TO ADD METHOD THAT RETURNS COORDS AS TILES
+   }
