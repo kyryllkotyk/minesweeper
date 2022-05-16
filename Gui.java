@@ -216,11 +216,11 @@ public class Gui extends JFrame implements MouseListener {
 	}
 	
 	private void checkGame() {	
-      //if player successfully finishes game in time	
+      //if player successfully finishes game	
 		if (game.isFinished()) {
 			game.setScore( game.getTimeElapsed() );
 			endGame();
-			JOptionPane.showMessageDialog(null, "Congratulations, you have finished the game in time!");
+			JOptionPane.showMessageDialog(null, "Congratulations, you have finished the game!");
 			gameOver();
 		}
 		
