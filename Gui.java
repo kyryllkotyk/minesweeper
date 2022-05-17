@@ -52,7 +52,7 @@ public class Gui extends JFrame implements MouseListener {
 		
 		//build board. CHANGE ACCORDING TO SIZES DECIDED ON
 		gameBoard = new JPanel();
-		gameBoard.setLayout(new GridLayout(10,10));
+		gameBoard.setLayout(new GridLayout(Difficulty.rowCount,Difficulty.colCount));
 		//rows
 		for (int y = 0; y < Difficulty.rowCount; y++) {
 			//cols
@@ -199,6 +199,46 @@ public class Gui extends JFrame implements MouseListener {
 		return difficulty;
 	}
 	
+	
+	//checks whether there is a flag in that panel to determine whether to add or remove
+	public boolean flagCheck() {
+		if (fieldSolution.equals("F")) { 
+			return true;
+		} else {
+			return false;
+		}
+	}
+		
+	//adds and removes flags
+	public void addRemoveFlag() {
+		if (flagCheck == true) {
+			//make panel normal
+			//increase flags left by 1
+		} else if (flagCheck == false) {
+			//add flag
+			//decrease flags left by 1
+		}
+	}
+
+	//counts flags left. make panel showing this later.
+	public int flagsLeft() {
+		int initialFlagCt;
+		if (difficulty = Difficulty.EASY) {
+			initialFlagCt = 10;
+		} else if (difficulty = Difficulty.NORMAL) {
+			initialFlagCt = 40;
+		} else if (difficulty = Difficulty.HARD) {
+			initialFlagCt = 99;
+		}
+		flagsLeft = initialFlagCt;
+		
+	}
+	
+	//
+	public boolean isRevealed() {
+		
+		
+		
 	//initiates score list
 	private void initScores() {
 		for (int i=0; i<lastScoresLabel.length; i++) {
