@@ -30,7 +30,7 @@ public class Gui extends JFrame implements MouseListener {
 	public Gui(Game game) {
 		setGame(game);
 		
-		//initialize time elapsed label
+		//initialize time elapsed label 
 		setTimeElapsedLabel(new JLabel(Integer.toString(time + " seconds") );
 		
 		showWelcomeMessage();
