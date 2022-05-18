@@ -200,14 +200,6 @@ public class Gui extends JFrame implements MouseListener {
 	}
 	
 	
-	//checks whether there is a flag in that panel to determine whether to add or remove
-	public boolean flagCheck() {
-		if (fieldSolution.equals("F")) { 
-			return true;
-		} else {
-			return false;
-		}
-	}
 		
 	//adds and removes flags
 	public void addRemoveFlag() {
@@ -233,10 +225,6 @@ public class Gui extends JFrame implements MouseListener {
 		flagsLeft = initialFlagCt;
 		
 	}
-	
-	//
-	public boolean isRevealed() {
-		
 		
 		
 	//initiates score list
@@ -326,15 +314,11 @@ public class Gui extends JFrame implements MouseListener {
 		}
 	}
 	
-   //starts timer
-	private void startTimer() {
-      //use eric's code/whoever is doing timer
-	}
 
    //hides all fields; makes content "?" and bg white
 	private void hideAll() {
 		game.getMinefield().resetAll();
-      //rows
+     		//rows
 		for (int y = 0; y < Difficulty.rowCount; y++) {
 			//cols
 			for (int x = 0; x < Difficulty.colCount; x++) {
