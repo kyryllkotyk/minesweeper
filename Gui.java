@@ -30,8 +30,8 @@ public class Gui extends JFrame implements MouseListener {
 	public Gui(Game game) {
 		setGame(game);
 		
-		//initialize time left label
-		setTimeElapsedLabel(new JLabel(Integer.toString(this.game.getTimeElapsed()) + " seconds") );
+		//initialize time elapsed label
+		setTimeElapsedLabel(new JLabel(Integer.toString(time + " seconds") );
 		
 		showWelcomeMessage();
 		
@@ -272,16 +272,14 @@ public class Gui extends JFrame implements MouseListener {
 		//rows
 		for (int y = 0; y < Difficulty.rowCount; y++) { 
 			//cols
-			for (int x = 0; x < Difficulty.colCount; x++) {	
-         			
-            buttons[x][y].setEnabled(false);
+			for (int x = 0; x < Difficulty.colCount; x++) {		
+           			buttons[x][y].setEnabled(false);
 				fieldSolution = this.game.getMinefield().getMinefield()[x][y].getContent();
-				
 				//if field is unrevealed
 				if ( fieldSolution.equals("?") ) {
-					fieldSolution = Integer.toString(this.game.getMinefield().getMinefield()[x][y].getNeighbours());
+					fieldSolution = Integer.toString(this.game.getMinefield().getMinefield()[x][y].getNeighbors());
 					//if mine
-               if (this.game.getMinefield().getMinefield()[x][y].getMine()) {
+               				if (this.game.getMinefield().getMinefield()[x][y].getMine()) {
 						fieldSolution = "M";
 						buttons[x][y].setBackground(Color.red);
 					} else {
@@ -427,7 +425,7 @@ public class Gui extends JFrame implements MouseListener {
 					button.setText("M");
 					button.setBackground(Color.red);
 					endGame();
-					JOptionPane.showMessageDialog(null, "You stepped on a mine! Game Over!");
+					JOptionPane.showMessageDialog(null, "You stepped on a mine! Game over!");
 					gameOver();
                
 				} else {		
