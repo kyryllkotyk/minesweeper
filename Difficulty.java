@@ -9,7 +9,6 @@ public enum Difficulty {
          return 10;
       }
       
-		@SuppressWarnings("unused")
 		public int getNumberOfMines() {
 			return 10;
 		}
@@ -28,8 +27,7 @@ public enum Difficulty {
       public int colCount {
          return 18;
       }
-      
-		@SuppressWarnings("unused")
+
 		public int getNumberOfMines() {
 			return 40;
 		}
@@ -49,7 +47,6 @@ public enum Difficulty {
          return 24;
       }
 		
-		@SuppressWarnings("unused")
 		public int getNumberOfMines() {
 			return 99;
 		}
