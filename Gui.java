@@ -14,18 +14,23 @@ public class Gui extends JFrame implements MouseListener {
 	private JButton[][] buttons = new JButton[10][10];
 	
 	//timer
-   private JLabel timeElapsedLabel;
+   	private JLabel timeElapsedLabel;
 	private Thread timer;
 	
 	//scores
 	private JLabel[][] lastScoresLabel;
 	
+	//diff constructor (modify/remove?)
+	Difficulty diff = new Difficulty();
+	
 	//frame
 	private final String FRAME_TITLE = "Java Minesweeper";
 	private final int FRAME_WIDTH = 700;
 	private final int FRAME_HEIGHT = 500;
-	private final int FRAME_LOC_X = 100;
-	private final int FRAME_LOC_Y = 100;
+	//private final int FRAME_LOC_X = 100;
+	//private final int FRAME_LOC_Y = 100;
+	public int frameWidth = Difficulty.tileSize * Difficulty.colCount + 200;
+   	public int frameHeight = Difficulty.tileSize * Difficulty.rowCount;
 	
 	public Gui(Game game) {
 		setGame(game);
@@ -43,7 +48,7 @@ public class Gui extends JFrame implements MouseListener {
 		JPanel scorePanel;
 		JPanel buttonPanel;
 		
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setSize(frameWidth, frameHeight);
 		setTitle(FRAME_TITLE);
 		setLocation(FRAME_LOC_X, FRAME_LOC_Y);
 		
