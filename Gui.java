@@ -213,6 +213,7 @@ public class Gui extends JFrame implements MouseListener {
 	}
 
 	//counts flags left. make panel showing this later.
+	//call flagsleft for every click?
 	public int flagsLeft() {
 		int initialFlagCt;
 		if (difficulty = Difficulty.EASY) {
@@ -223,7 +224,9 @@ public class Gui extends JFrame implements MouseListener {
 			initialFlagCt = 99;
 		}
 		flagsLeft = initialFlagCt;
-		
+		if (flagCheck == true) {
+			flagsLeft--;
+		}
 	}
 		
 		
