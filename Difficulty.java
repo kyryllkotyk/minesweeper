@@ -1,11 +1,11 @@
 public enum Difficulty {
 	
 	EASY {
-      		public int rowCount {
+      		public int rowCount() {
          		return 8;
       		}
       
-      		public int colCount {
+      		public int colCount() {
 			return 10;
       		}
       
@@ -20,11 +20,11 @@ public enum Difficulty {
 	},
    
 	NORMAL {
-		public int rowCount {
+		public int rowCount() {
          		return 14;
       		}
       
-      		public int colCount {
+      		public int colCount() {
         		return 18;
       		}
 
@@ -39,11 +39,11 @@ public enum Difficulty {
 	},
    
 	HARD {
-      		public int rowCount {
+      		public int rowCount() {
          		return 20;
      		}
       
-      		public int colCount {
+      		public int colCount() {
          		return 24;
       		}
 		
@@ -58,5 +58,4 @@ public enum Difficulty {
 	};
 	
 	abstract int getNumberOfMines();
-	abstract int getTimelimit();
 }
