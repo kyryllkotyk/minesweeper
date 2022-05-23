@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class Gui extends JFrame implements MouseListener {
+public class Gui extends JFrame {
 	
 	private static final long serialVersionUID = -7860274770183768002L;
 
@@ -72,7 +72,8 @@ public class Gui extends JFrame implements MouseListener {
 				gameBoard.add(buttons[x][y]);
 			}
 		}
-
+		
+				    
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new BorderLayout());
 		
@@ -183,7 +184,7 @@ public class Gui extends JFrame implements MouseListener {
 		}
 	}
 
-	private Difficulty askDifficulty() {
+	public Difficulty askDifficulty() {
 		Difficulty difficulty = null;
 		
 		String[] list = { Difficulty.EASY.toString(), Difficulty.NORMAL.toString(), Difficulty.HARD.toString() };
@@ -219,19 +220,7 @@ public class Gui extends JFrame implements MouseListener {
 
 	//counts flags left. make panel showing this later.
 	//call flagsleft for every click?
-	public int flagsLeft() {
-		int initialFlagCt;
-		if (difficulty = Difficulty.EASY) {
-			initialFlagCt = 10;
-		} else if (difficulty = Difficulty.NORMAL) {
-			initialFlagCt = 40;
-		} else if (difficulty = Difficulty.HARD) {
-			initialFlagCt = 99;
-		}
-		flagsLeft = initialFlagCt;
-		if (flagCheck == true) {
-			flagsLeft--;
-		}
+	public int flagsLeft(int flagCount) {
 	}
 		
 		
