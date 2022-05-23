@@ -134,77 +134,47 @@ public class Game {
 		setScore(0);		
 	}
 	
-	/**
-	 * If a player clicks on a zero, all surrounding fields ("neighbors") must revealed.
-	 * This method is recursive: if a neighbour is also a zero, his neighbors must also be revealed...
-	 * 
-	 * @param buttons
-	 * @param xCo
-	 * @param yCo
-	 * @pre The field (xCo, yCo) must be a "zero" field. 
-	 * 	| minefield.getMinefield()[xCo][yCo].getNeighbors() == 0
-	 */
+	//if player clicks on 0, surrounding fields revealed
 	public void findZeroes(JButton[][] buttons, int xCo, int yCo) {
 		int neighbors;
 		//col
 		for(int x = minefield.makeValidCoordinate(xCo - 1); x <= minefield.makeValidCoordinate(xCo + 1); x++) {	
 			//row
 			for(int y = minefield.makeValidCoordinate(yCo - 1); y <= minefield.makeValidCoordinate(yCo + 1); y++) {
-				
-				// Only unrevealed fields need to be revealed...
 				if(minefield.getMinefield()[x][y].getContent().equals("?")) {
-					
-					// Get the # neighbors of the current (neighbouring) field.
+					//get the # neighbors of the current (neighboring) field.
 					neighbors = minefield.getMinefield()[x][y].getNeighbors();
-					
-					// Reveal the # neighbors of the current (neighbouring) field
+					//reveal ^
 					minefield.getMinefield()[x][y].setContent(Integer.toString(neighbors));
 					buttons[x][y].setText(Integer.toString(neighbors));
-					
-					// Is this (neighbouring) field a "zero" field itself?
-					if(neighbors == 0){
-						// Yes, give it a special color and recurse!
+					if (neighbors == 0){
 						buttons[x][y].setBackground(Color.lightGray);
 						findZeroes(buttons, x, y);
-					}else{
-						// No, give it a boring gray color.
+					} else {
 						buttons[x][y].setBackground(Color.gray);
 					}
-					
-				}
-				
+				}	
 			}
-			
 		}
 	}
 	
-	/**
-	 * Checks the game to see if it is finished (true) or not (false).
-	 * 
-	 * @return true if the game is over, else false
-	 */
-	public boolean isFinished()
-	{
+	//check to see if game is finished
+	public boolean isFinished() {
 		boolean isFinished = true;
 		String fieldSolution;
-		
 		//rows
 		for (int y = 0; y < Difficulty.rowCount; y++) { 
 			//cols
 			for (int x = 0; x < Difficulty.colCount; x++) {	
-			
-				// fieldContent contains the solution of a field
-				// If a game is solved, the content of each field on the board must match fieldContent.
+				//fieldContent contains the solution of a field
+				//if a game is solved, the content of each field on the board must match fieldContent
 				fieldSolution = Integer.toString(minefield.getMinefield()[x][y].getNeighbors());
-				if(minefield.getMinefield()[x][y].getMine()) fieldSolution = "F";
-			
-				// Compare the player's "answer" to the solution.
-				if(!minefield.getMinefield()[x][y].getContent().equals(fieldSolution)) {
-					// This field is not solved yet!
+				if (minefield.getMinefield()[x][y].getMine()) fieldSolution = "F";
+				//compare the player's "answer" to the solution.
+				if (!minefield.getMinefield()[x][y].getContent().equals(fieldSolution)) {
 					isFinished = false;
-					// No need to check the rest of the minefield: stop the for's.
-					x = 10;
-					y = 10;
+					x = Difficulty.colCount;
+					y = Difficulty.rowCount;
 				}
 			
 			}
