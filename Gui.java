@@ -4,14 +4,12 @@ import java.awt.event.*;
 
 
 public class Gui extends JFrame {
-	
-	private static final long serialVersionUID = -7860274770183768002L;
 
 	//game & its settings
 	private Game game;
 	
 	//jbuttons
-	private JButton[][] buttons = new JButton[10][10];
+	private JButton[][] buttons = new JButton[10][10]; //CHANGE BASED ON ROW/COL COUNT
 	
 	//timer
    	private JLabel timeElapsedLabel;
