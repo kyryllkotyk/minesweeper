@@ -1,5 +1,5 @@
 public class Minefield implements Difficulty {
-   //change based on difficulty
+	//change based on difficulty
 	private int numberOfMines;
 	
 	//matrix of fields
@@ -13,7 +13,7 @@ public class Minefield implements Difficulty {
 		setMinefield(makeMinefield(makeMines()));
 	}
 	
-  private void setNumberOfMines(int numberOfMines) {
+	private void setNumberOfMines(int numberOfMines) {
 		this.numberOfMines = numberOfMines;
 	}
 	
@@ -41,7 +41,7 @@ public class Minefield implements Difficulty {
 			//random y
 			y = (int)Math.floor(Math.random() * Difficulty.rowCount);
 			
-      //i forgor what this is for
+			//i forgor what this is for
 			x = 4;
 			y = 4;
 			
@@ -94,10 +94,10 @@ public class Minefield implements Difficulty {
 	//makes x coordinate within bounds of minefield
 	public int makeValidXCoordinate(int i) {
 		if (i < 0) {
-         i = 0;
-      } else if (i > diff.colCount() - 1) {
-         i = diff.colCount() - 1;
-      }
+			i = 0;
+		} else if (i > diff.colCount() - 1) {
+			i = diff.colCount() - 1;
+		}
 		return i;
 	}
    
