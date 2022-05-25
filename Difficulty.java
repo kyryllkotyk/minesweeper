@@ -1,5 +1,6 @@
 public class Difficulty extends Gui {
-   
+   public int difficulty;
+	
    public int rowCount(int difficulty) {
       if (difficulty == 0) {
          return 8;
