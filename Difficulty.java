@@ -1,73 +1,61 @@
-public enum Difficulty {
-	
-	EASY {
-		public int rowCount() {
-			return 8;
-		}
-
-		public int colCount() {
-			return 10;
-		}
-
-		public int tileSize() {
-			return 50;
-		}
-      
-		public int getNumberOfMines() {
-			return 10;
-		}
-		
-		public String toString() {
-			return "Easy";
-		}
-		
-	},
+public class Difficulty extends Gui {
    
-	NORMAL {
-		public int rowCount() {
-			return 14;
-		}
+   public int rowCount(int difficulty) {
+      if (difficulty == 0) {
+         return 8;
+      }
+      if (difficulty == 1) {
+         return 14;
+      } 
+      if difficulty == 2) {
+         return 20;
+      }
+   }
       
-		public int colCount() {
-			return 18;
-		}
+   public int colCount(int difficulty) {
+      if (difficulty == 0) {
+         return 10;
+      }
+      if (difficulty == 1) {
+         return 18;
+      } 
+      if difficulty == 2) {
+         return 24;
+      }   }
       
-		public int tileSize() {
-			return 40;
-		}
+   public int tileSize(int difficulty) {
+	if (difficulty == 0) {
+         return 50;
+      }
+      if (difficulty == 1) {
+         return 40;
+      } 
+      if difficulty == 2) {
+         return 30;
+      }
+   }
       
-		public int getNumberOfMines() {
-			return 40;
-		}
+   public int getNumberOfMines(int difficulty) {
+	if (difficulty == 0) {
+         return 10;
+      }
+      if (difficulty == 1) {
+         return 40;
+      } 
+      if difficulty == 2) {
+         return 99;
+      }
+   }
 		
-		public String toString() {
-			return "Normal";
-		}
-		
-	},
-   
-	HARD {
-		public int rowCount() {
-			return 20;
-		}
-      
-		public int colCount() {
-			return 24;
-		}
-      
-		public int tileSize() {
-			return 30;
-		}
-		
-		public int getNumberOfMines() {
-			return 99;
-		}
-		
-		public String toString() {
-			return "Hard";
-		}
-		
-	};
-	
-	abstract int getNumberOfMines();
+   public String toString(int difficulty) {
+	if (difficulty == 0) {
+         return "Easy";
+      }
+      if (difficulty == 1) {
+         return "Normal";
+      } 
+      if difficulty == 2) {
+         return "Hard";
+      }
+   }
 }
