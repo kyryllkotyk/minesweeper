@@ -224,7 +224,7 @@ public class Gui extends JFrame {
 		
 	//initiates score list
 	private void initScores() {
-		for (int i=0; i<lastScoresLabel.length; i++) {
+		for (int i = 0; i < lastScoresLabel.length; i++) {
 			lastScoresLabel[i][0] = new JLabel();
 			lastScoresLabel[i][1] = new JLabel();
 		}
@@ -232,7 +232,7 @@ public class Gui extends JFrame {
 	
 	//refreshes scores list
 	private void refreshScores() {
-		for (int i=0; i<lastScoresLabel.length; i++) {
+		for (int i = 0; i < lastScoresLabel.length; i++) {
 			lastScoresLabel[i][0].setText("  " + this.game.getLastScores()[i][0]);
 			lastScoresLabel[i][1].setText("        " + this.game.getLastScores()[i][1]);
 		}
