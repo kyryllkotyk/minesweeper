@@ -18,7 +18,6 @@ public class Gui extends JFrame {
 	//scores
 	private JLabel[][] lastScoresLabel;
 	
-	//diff constructor (modify/remove?)
 	
 	//frame
 	private final String FRAME_TITLE = "Java Minesweeper";
@@ -26,8 +25,8 @@ public class Gui extends JFrame {
 	private final int FRAME_HEIGHT = 500;
 	//private final int FRAME_LOC_X = 100;
 	//private final int FRAME_LOC_Y = 100;
-	public int frameWidth = Difficulty.tileSize * Difficulty.colCount + 200;
-   	public int frameHeight = Difficulty.tileSize * Difficulty.rowCount;
+	public int frameWidth = Difficulty.tileSize() * Difficulty.colCount() + 200;
+   	public int frameHeight = Difficulty.tileSize() * Difficulty.rowCount();
 	
 	public Gui(Game game) {
 		setGame(game);
