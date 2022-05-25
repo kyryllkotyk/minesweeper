@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.event.*;
 import java.awt.event.*;
-
 
 public class Gui extends JFrame {
 
@@ -19,7 +19,6 @@ public class Gui extends JFrame {
 	private JLabel[][] lastScoresLabel;
 	
 	//diff constructor (modify/remove?)
-	Difficulty diff = new Difficulty();
 	
 	//frame
 	private final String FRAME_TITLE = "Java Minesweeper";
@@ -34,7 +33,7 @@ public class Gui extends JFrame {
 		setGame(game);
 		
 		//initialize time elapsed label 
-		setTimeElapsedLabel(new JLabel(Integer.toString(time + " seconds") );
+		setTimeElapsedLabel(new JLabel(Integer.toString(time + " seconds")));
 		
 		showWelcomeMessage();
 		
@@ -120,6 +119,72 @@ public class Gui extends JFrame {
 		//doesn't allow player to click on the gameboard (yet)
 		disableAll();
 	}
+   
+   public int click;
+   public Difficulty diff = game.getDifficulty;
+   int row = diff.colCount();
+   int col = diff.rowCount();
+   public boolean[][] flags = new boolean[row][col];
+   //Makes a panel that tells you that a mouse is pressed. Also use to record x and y of the click.
+      public void mousePressed(MouseEvent event){
+              int x = event.getX();
+              int y = event.getY();
+              click = event.getButton();
+              whatToDo(x, y);
+      }
+      
+      public void whatToDo(int x, int y){
+      int number = diff.getNumberOfMines();
+      int flagCount = diff.getNumberOfMines();
+      boolean[][] bombs = new boolean[diff.colCount][diff.rowCount];
+      Bombs bomb = new Bombs(bombs, x, y, number);
+      int count = 0;
+      //Left click
+         if(click == 1){
+            //Might need to be changed to GUI !*!
+            //diff.tile(bomb.bombsAdjacent(x, y));
+            //Bomb might need to be changed to GUI !*!
+            //bomb.leftClick();
+         }
+         //Middle click
+         if(click == 2){
+         //Runs through adjacent(and the tile clicked on) and checks for flags
+           for(int i = x - 1; i <= x + 1; i++){
+               for(int j = y - 1; j <= y + 1; j++){
+                  //Counts the amount of flags in the proximity
+                  if(flags[x][y] == true){
+                     count++;
+                  }
+               }
+           }
+           //Reveals the adjacent 
+           if(count == bomb.bombsAdjacent(x,y)){
+               for(int i = x - 1; i <= x + 1; i++){
+                     for(int j = y - 1; i <= y + 1; j++){
+ /* Might need to change from diff to GUI */          if(diff.isRevealed() == false){
+                                 int x1 = x;
+                                 int y1 = y;
+                                 x = i;
+                                 y = j;
+ /* Might need to change from diff to GUI */ diff.tile(bomb.bombsAdjacent(x, y));
+                                 x = x1;
+                                 y = y1;
+                           }
+                     }
+               }
+           }
+         }
+         //Right click
+         if(click == 3){
+            flags[x][y] = !flags[x][y];
+            if(flags[x][y] == true){
+               flagCount--;
+            }
+            else{
+               flagCount++;
+            }
+         }
+      }
 	
 	private void setGame(Game game) {
 		this.game = game;
@@ -224,7 +289,7 @@ public class Gui extends JFrame {
 		
 	//initiates score list
 	private void initScores() {
-		for (int i = 0; i < lastScoresLabel.length; i++) {
+		for (int i=0; i<lastScoresLabel.length; i++) {
 			lastScoresLabel[i][0] = new JLabel();
 			lastScoresLabel[i][1] = new JLabel();
 		}
@@ -232,7 +297,7 @@ public class Gui extends JFrame {
 	
 	//refreshes scores list
 	private void refreshScores() {
-		for (int i = 0; i < lastScoresLabel.length; i++) {
+		for (int i=0; i<lastScoresLabel.length; i++) {
 			lastScoresLabel[i][0].setText("  " + this.game.getLastScores()[i][0]);
 			lastScoresLabel[i][1].setText("        " + this.game.getLastScores()[i][1]);
 		}
@@ -374,5 +439,3 @@ public class Gui extends JFrame {
 		}
 	}
 }
-//swap .rowCount and .colCount ???
-//remove timeleft
