@@ -7,7 +7,7 @@ public class Difficulty extends Gui {
       if (difficulty == 1) {
          return 14;
       } 
-      if difficulty == 2) {
+      if (difficulty == 2) {
          return 20;
       }
    }
@@ -19,7 +19,7 @@ public class Difficulty extends Gui {
       if (difficulty == 1) {
          return 18;
       } 
-      if difficulty == 2) {
+      if (difficulty == 2) {
          return 24;
       }   }
       
@@ -30,7 +30,7 @@ public class Difficulty extends Gui {
       if (difficulty == 1) {
          return 40;
       } 
-      if difficulty == 2) {
+      if (difficulty == 2) {
          return 30;
       }
    }
@@ -42,7 +42,7 @@ public class Difficulty extends Gui {
       if (difficulty == 1) {
          return 40;
       } 
-      if difficulty == 2) {
+      if (difficulty == 2) {
          return 99;
       }
    }
@@ -54,7 +54,7 @@ public class Difficulty extends Gui {
       if (difficulty == 1) {
          return "Normal";
       } 
-      if difficulty == 2) {
+      if (difficulty == 2) {
          return "Hard";
       }
    }
