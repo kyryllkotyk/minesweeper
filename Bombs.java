@@ -18,7 +18,6 @@ public class Bombs{
             bombsGenerated++;
          }
       }
-      clock.newGame();
    }
    
    //returns the number of bombs adjacent to the given coordinates
