@@ -1,32 +1,31 @@
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.event.*;
 import java.awt.event.*;
 
-public class Gui extends JFrame {
 
+public class Gui extends JFrame {
+	
 	//game & its settings
 	private Game game;
-	
+   Difficulty d = new Difficulty();
+   
 	//jbuttons
-	private JButton[][] buttons = new JButton[10][10]; //CHANGE BASED ON ROW/COL COUNT
+   //change once i can obtain difficulty methods
+	private JButton[][] buttons = new JButton[10][10];
 	
 	//timer
-   	private JLabel timeElapsedLabel;
-	private Thread timer;
+   private JLabel timeElapsedLabel;
+   public int time;
 	
 	//scores
 	private JLabel[][] lastScoresLabel;
 	
-	
 	//frame
 	private final String FRAME_TITLE = "Java Minesweeper";
-	private final int FRAME_WIDTH = 700;
-	private final int FRAME_HEIGHT = 500;
-	//private final int FRAME_LOC_X = 100;
-	//private final int FRAME_LOC_Y = 100;
-	public int frameWidth = Difficulty.tileSize() * Difficulty.colCount() + 200;
-   	public int frameHeight = Difficulty.tileSize() * Difficulty.rowCount();
+	private final int FRAME_LOC_X = 100;
+	private final int FRAME_LOC_Y = 100;
+   public int frameWidth = d.tileSize() * d.colCount() + 200;
+   public int frameHeight = d.tileSize() * d.rowCount();
 	
 	public Gui(Game game) {
 		setGame(game);
@@ -53,11 +52,11 @@ public class Gui extends JFrame {
 		
 		//build board. CHANGE ACCORDING TO SIZES DECIDED ON
 		gameBoard = new JPanel();
-		gameBoard.setLayout(new GridLayout(Difficulty.rowCount,Difficulty.colCount));
+		gameBoard.setLayout(new GridLayout(d.rowCount(),d.colCount()));
 		//rows
-		for (int y = 0; y < Difficulty.rowCount; y++) {
+		for (int y = 0; y < d.rowCount(); y++) {
 			//cols
-			for (int x = 0; x < Difficulty.colCount; x++) {
+			for (int x = 0; x < d.colCount(); x++) {
 				//button txt
 				buttons[x][y] = new JButton(this.game.getMinefield().getMinefield()[x][y].getContent());
 				//button name (x,y)
@@ -68,8 +67,7 @@ public class Gui extends JFrame {
 				gameBoard.add(buttons[x][y]);
 			}
 		}
-		
-				    
+
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new BorderLayout());
 		
@@ -118,72 +116,6 @@ public class Gui extends JFrame {
 		//doesn't allow player to click on the gameboard (yet)
 		disableAll();
 	}
-   
-   public int click;
-   public Difficulty diff = game.getDifficulty;
-   int row = diff.colCount();
-   int col = diff.rowCount();
-   public boolean[][] flags = new boolean[row][col];
-   //Makes a panel that tells you that a mouse is pressed. Also use to record x and y of the click.
-      public void mousePressed(MouseEvent event){
-              int x = event.getX();
-              int y = event.getY();
-              click = event.getButton();
-              whatToDo(x, y);
-      }
-      
-      public void whatToDo(int x, int y){
-      int number = diff.getNumberOfMines();
-      int flagCount = diff.getNumberOfMines();
-      boolean[][] bombs = new boolean[diff.colCount][diff.rowCount];
-      Bombs bomb = new Bombs(bombs, x, y, number);
-      int count = 0;
-      //Left click
-         if(click == 1){
-            //Might need to be changed to GUI !*!
-            //diff.tile(bomb.bombsAdjacent(x, y));
-            //Bomb might need to be changed to GUI !*!
-            //bomb.leftClick();
-         }
-         //Middle click
-         if(click == 2){
-         //Runs through adjacent(and the tile clicked on) and checks for flags
-           for(int i = x - 1; i <= x + 1; i++){
-               for(int j = y - 1; j <= y + 1; j++){
-                  //Counts the amount of flags in the proximity
-                  if(flags[x][y] == true){
-                     count++;
-                  }
-               }
-           }
-           //Reveals the adjacent 
-           if(count == bomb.bombsAdjacent(x,y)){
-               for(int i = x - 1; i <= x + 1; i++){
-                     for(int j = y - 1; i <= y + 1; j++){
- /* Might need to change from diff to GUI */          if(diff.isRevealed() == false){
-                                 int x1 = x;
-                                 int y1 = y;
-                                 x = i;
-                                 y = j;
- /* Might need to change from diff to GUI */ diff.tile(bomb.bombsAdjacent(x, y));
-                                 x = x1;
-                                 y = y1;
-                           }
-                     }
-               }
-           }
-         }
-         //Right click
-         if(click == 3){
-            flags[x][y] = !flags[x][y];
-            if(flags[x][y] == true){
-               flagCount--;
-            }
-            else{
-               flagCount++;
-            }
-         }
-      }
 	
 	private void setGame(Game game) {
 		this.game = game;
@@ -214,7 +146,7 @@ public class Gui extends JFrame {
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	private void initGame(Difficulty difficulty) {
+	private void initGame(String difficulty) {
 		hideAll();
 		enableAll();
 		startTimer();
@@ -229,42 +161,42 @@ public class Gui extends JFrame {
       switch(startNew) {
 			case JOptionPane.YES_OPTION: 
 				String player = game.getPlayer();
-				Difficulty difficulty = game.getDifficulty();
+				String diff = game.getDifficulty();
 				
 				//check if we should ask the player name and difficulty again.
-				while( player == null || difficulty == null || player.equals("") ) {
+				while( player == null || diff == null || player.equals("") ) {
 					player = "Player";
-					difficulty = askDifficulty();
+					diff = askDifficulty();
 				}
 				
 				game.setPlayer(player);
-				game.setDifficulty(difficulty);
-				initGame(difficulty);
+				game.setDifficulty(diff);
+				initGame(diff);
 				break;		
 		  case JOptionPane.NO_OPTION: break;
 		  case JOptionPane.CLOSED_OPTION: break;  
 		}
 	}
 
-	public Difficulty askDifficulty() {
-		Difficulty difficulty = null;
+	public String askDifficulty() {
+		String diff = null;
 		
-		String[] list = { Difficulty.EASY.toString(), Difficulty.NORMAL.toString(), Difficulty.HARD.toString() };
+		String[] list = {"Easy", "Normal", "Hard"};
 		String answer = null;
 		
-		while( answer == null ){
+		while(answer == null){
 			answer = (String)JOptionPane.showInputDialog(null, "Choose a difficulty level.", 
 				JOptionPane.INFORMATION_MESSAGE, null, list, list[1]);
 		}
 		
-		if ( answer.equals( list[0] ) )
-			difficulty = Difficulty.EASY;
-		else if ( answer.equals( list[1] ) )
-			difficulty = Difficulty.NORMAL;
-		else if ( answer.equals( list[2] ) )
-			difficulty = Difficulty.HARD;
+		if (answer.equals(list[0]))
+			diff = "Easy";
+		else if (answer.equals(list[1]))
+			diff = "Normal";
+		else if (answer.equals(list[2]))
+			diff = "Hard";
 		
-		return difficulty;
+		return diff;
 	}
 	
 	
@@ -282,7 +214,19 @@ public class Gui extends JFrame {
 
 	//counts flags left. make panel showing this later.
 	//call flagsleft for every click?
-	public int flagsLeft(int flagCount) {
+	public int flagsLeft() {
+		int initialFlagCt;
+		if (diff= "Easy") {
+			initialFlagCt = 10;
+		} else if (diff = "Normal") {
+			initialFlagCt = 40;
+		} else if (diff = "Hard") {
+			initialFlagCt = 99;
+		}
+		flagsLeft = initialFlagCt;
+		if (flagCheck == true) {
+			flagsLeft--;
+		}
 	}
 		
 		
@@ -317,13 +261,13 @@ public class Gui extends JFrame {
 	private void showAll() {
 		String fieldSolution;
 		//rows
-		for (int y = 0; y < Difficulty.rowCount; y++) { 
+		for (int y = 0; y < d.rowCount(); y++) { 
 			//cols
-			for (int x = 0; x < Difficulty.colCount; x++) {		
+			for (int x = 0; x < d.colCount(); x++) {		
            			buttons[x][y].setEnabled(false);
 				fieldSolution = this.game.getMinefield().getMinefield()[x][y].getContent();
 				//if field is unrevealed
-				if ( fieldSolution.equals("?") ) {
+				if (fieldSolution.equals("?"))  {
 					fieldSolution = Integer.toString(this.game.getMinefield().getMinefield()[x][y].getNeighbors());
 					//if mine
                				if (this.game.getMinefield().getMinefield()[x][y].getMine()) {
@@ -354,9 +298,9 @@ public class Gui extends JFrame {
    //makes fields clickable
 	private void enableAll() {
 		//rows
-		for (int y = 0; y < Difficulty.rowCount; y++) {
+		for (int y = 0; y < d.rowCount(); y++) {
 			//cols
-			for (int x = 0; x < Difficulty.colCount; x++) {
+			for (int x = 0; x < d.colCount(); x++) {
 				buttons[x][y].setEnabled(true);
 			}
 		}
@@ -365,9 +309,9 @@ public class Gui extends JFrame {
 	//makes fields unclickable (for welcome message/quiting game)
 	private void disableAll() {
 		//rows
-		for (int y = 0; y < Difficulty.rowCount; y++) {
+		for (int y = 0; y < d.rowCount(); y++) {
 			//cols
-			for (int x = 0; x < Difficulty.colCount; x++) {
+			for (int x = 0; x < d.colCount(); x++) {
 				buttons[x][y].setEnabled(false);
 			}
 		}
@@ -378,9 +322,9 @@ public class Gui extends JFrame {
 	private void hideAll() {
 		game.getMinefield().resetAll();
      		//rows
-		for (int y = 0; y < Difficulty.rowCount; y++) {
+		for (int y = 0; y < d.rowCount(); y++) {
 			//cols
-			for (int x = 0; x < Difficulty.colCount; x++) {
+			for (int x = 0; x < d.colCount(); x++) {
 				buttons[x][y].setText("?");
 				buttons[x][y].setBackground(Color.white);
 			}
@@ -404,18 +348,18 @@ public class Gui extends JFrame {
 			case JOptionPane.YES_OPTION: 
 			
 				String player = game.getPlayer();
-				Difficulty difficulty = game.getDifficulty();
+				String diff = game.getDifficulty();
 				
 				//check if we should ask for difficulty again.
-				if (difficulty == null) {
-					difficulty = askDifficulty();
+				if (diff == null) {
+					diff = askDifficulty();
 				}
 				
 				game.setPlayer(player);
-				game.setDifficulty(difficulty);
+				game.setDifficulty(diff);
 				
 				//initializes new game
-				initGame(difficulty);
+				initGame(diff);
 				
 				break;
 			
