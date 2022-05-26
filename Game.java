@@ -5,6 +5,13 @@ import javax.swing.*;
 public class Game {
 	//player (name)
 	private String player;
+   
+   //bombs
+   public boolean[][] bombs;
+   private int x;
+   private int y;
+   public int number;
+   Bombs b = new Bombs(bombs, x, y, number);
 	
 	//whether a game is running (true) or not (false).
 	private boolean playing; 
@@ -13,7 +20,8 @@ public class Game {
 	private Minefield minefield;
 	
 	//difficulty settings
-	private Difficulty difficulty;
+	public String diff;
+   Difficulty d = new Difficulty();
 	
 	// timer settings
 	private Thread timer;
@@ -27,8 +35,8 @@ public class Game {
 	public Game(String player) {
 		setPlayer(player);
 		setPlaying(false);
-		setMinefield(new Minefield(Difficulty.NORMAL.getNumberOfMines()));
-		setDifficulty(Difficulty.NORMAL);
+		setMinefield(new Minefield(d.getNumberOfMines()));
+		setDifficulty("Normal");
 		setLastScores(new String[4][2]);
 		setScore(0);
 		resetScores();		
@@ -64,12 +72,8 @@ public class Game {
 		return minefield;
 	}
 	
-	public void setDifficulty(Difficulty difficulty) {
-		this.difficulty = difficulty;
-	}
-	
-	public Difficulty getDifficulty() {
-		return difficulty;
+	public String getDifficulty() {
+		return diff;
 	}
 	
 	public Thread getTimer() {
@@ -127,54 +131,34 @@ public class Game {
 		//new minefield
 		setMinefield( new Minefield( difficulty.getNumberOfMines() ) );
 		//set difficulty.
-		setDifficulty(difficulty);
+		diff = "Normal";
 		//start game (timer).
 		setPlaying(true);
 		//set score.
 		setScore(0);		
 	}
-	
-	//if player clicks on 0, surrounding fields revealed
-	public void findZeroes(JButton[][] buttons, int xCo, int yCo) {
-		int neighbors;
-		//col
-		for(int x = minefield.makeValidCoordinate(xCo - 1); x <= minefield.makeValidCoordinate(xCo + 1); x++) {	
-			//row
-			for(int y = minefield.makeValidCoordinate(yCo - 1); y <= minefield.makeValidCoordinate(yCo + 1); y++) {
-				if(minefield.getMinefield()[x][y].getContent().equals("?")) {
-					//get the # neighbors of the current (neighboring) field.
-					neighbors = minefield.getMinefield()[x][y].getNeighbors();
-					//reveal ^
-					minefield.getMinefield()[x][y].setContent(Integer.toString(neighbors));
-					buttons[x][y].setText(Integer.toString(neighbors));
-					if (neighbors == 0){
-						buttons[x][y].setBackground(Color.lightGray);
-						findZeroes(buttons, x, y);
-					} else {
-						buttons[x][y].setBackground(Color.gray);
-					}
-				}	
-			}
-		}
-	}
-	
-	//check to see if game is finished
+		
+	//checks if game is finished
 	public boolean isFinished() {
 		boolean isFinished = true;
 		String fieldSolution;
+		
 		//rows
-		for (int y = 0; y < Difficulty.rowCount; y++) { 
+		for (int y = 0; y < d.rowCount(); y++) { 
 			//cols
-			for (int x = 0; x < Difficulty.colCount; x++) {	
+			for (int x = 0; x < d.colCount(); x++) {	
+			
 				//fieldContent contains the solution of a field
-				//if a game is solved, the content of each field on the board must match fieldContent
+				//if a game is solved, the content of each field on the board must match fieldConten
 				fieldSolution = Integer.toString(minefield.getMinefield()[x][y].getNeighbors());
-				if (minefield.getMinefield()[x][y].getMine()) fieldSolution = "F";
-				//compare the player's "answer" to the solution.
-				if (!minefield.getMinefield()[x][y].getContent().equals(fieldSolution)) {
+				if(minefield.getMinefield()[x][y].getMine()) fieldSolution = "F";
+			
+				//compare the player's "answer" to the solution
+				if(!minefield.getMinefield()[x][y].getContent().equals(fieldSolution)) {
+					//field not solved yet
 					isFinished = false;
-					x = Difficulty.colCount;
-					y = Difficulty.rowCount;
+					x = d.colCount();
+					y = d.rowCount();
 				}
 			
 			}
@@ -184,10 +168,8 @@ public class Game {
 		return isFinished;
 	}
 	
-	public void gameOver()
-	{
+	public void gameOver() {
 		setPlayer(null);
-		setDifficulty(null);
 	}
 	
 	//ends game
