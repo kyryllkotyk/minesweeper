@@ -7,13 +7,11 @@ public class Bombs{
       int total = number;
       Random r = new Random();
       grid = bombs;
-      Time clock = new Time();
       int bombsGenerated = 0;
       while(bombsGenerated<total){
          int x1 = r.nextInt(bombs.length);
          int y1 = r.nextInt(bombs[0].length);
-         if(!(x1==x && y1==y) && !(x1==x-1 && y1==y-1) && 
-         !(x1==x+1 && y1==y+1) && !bombs[x1][y1]){
+         if(!(x1<=x+1 && y1<=y+1 && x1>=x-1 && y1>=y-1) && !bombs[x1][y1]){
             bombs[x1][y1] = true;
             bombsGenerated++;
          }
