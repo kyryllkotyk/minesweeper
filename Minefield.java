@@ -1,16 +1,18 @@
-public class Minefield implements Difficulty {
+import java.util.*;
+public class Minefield{
 	//change based on difficulty
 	private int numberOfMines;
-	
+   Game game = new Game();
+	public Gui gui = new Gui(game);
 	//matrix of fields
-	private Field minefield[][] = new Field[Difficulty.colCount][Difficulty.rowCount];
+	private Field minefield[][] = new Field[gui.diff.colCount()][gui.diff.rowCount()];
 	
 	//array of "mine" coordinates is generated | makeMines()
 	//new minefield is generated, based on the previous array of mines | makeMinefield(makeMines())
 	//current minefield is set | new.getMinefield() == makeMinefield(makeMines())
 	public Minefield(int numberOfMines) {
 		setNumberOfMines(numberOfMines);
-		setMinefield(makeMinefield(makeMines()));
+		setMinefield(makeMinefield(makeMines(gui.x, gui.y, gui.bombs, gui.diff)));
 	}
 	
 	private void setNumberOfMines(int numberOfMines) {
@@ -31,37 +33,21 @@ public class Minefield implements Difficulty {
 	}
 	
 	//generates 2D array of mine coordinates
-	public int[][] makeMines() {
-		int[][] mines = new int[numberOfMines][2];
-		int x,y;
-		boolean isTaken;
-		for(int mine = 0; mine < numberOfMines; mine++) {
-			//random x
-			x = (int)Math.floor(Math.random() * Difficulty.colCount);
-			//random y
-			y = (int)Math.floor(Math.random() * Difficulty.rowCount);
-			
-			//i forgor what this is for
-			x = 4;
-			y = 4;
-			
-			isTaken = true;
-			while(isTaken) {
-				isTaken = searchMine(mines, x, y);
-				if(isTaken) {
-					//generate new x/y coords
-					x = (int)Math.floor(Math.random() * Difficulty.colCount());
-					y = (int)Math.floor(Math.random() * Difficulty.rowCount());
-				}
-			}	
-			// add to mines array
-			mines[mine][0] = x;
-			mines[mine][1] = y;	
-		}
-		return mines;
-	}
+	public boolean[][] makeMines(int x, int y, boolean[][] bombs, Difficulty difficulty){
+      Random r = new Random();
+      int total = difficulty.getNumberOfMines();
+		int bombsGenerated = 0;
+      while(bombsGenerated<total){
+         int x1 = r.nextInt(bombs.length);
+         int y1 = r.nextInt(bombs[0].length);
+         if(!(x1<=x+1 && y1<=y+1 && x1>=x-1 && y1>=y-1) && !bombs[x1][y1]){
+            bombs[x1][y1] = true;
+            bombsGenerated++;
+         }
+      }
+      }
 	
-	public Field[][] makeMinefield(int[][] mines) {	
+	public Field[][] makeMinefield(boolean[][] mines) {	
 		//fill matrix with fields and distribute the mines
 		for( int x = 0; x < 10; x++ ) {
 			for( int y = 0; y < 10; y++ ) {
@@ -70,16 +56,16 @@ public class Minefield implements Difficulty {
 			}
 		}
 		//set the neighbors attribute of each Field - change calculateNeighbors to whatever Eric's method is called
-		for( int x = 0; x < diff.getColCount(); x++) {
-			for( int y = 0; y < diff.getRowCount(); y++) {
-				minefield[x][y].setNeighbors(calculateNeighbors(x,y));
+		for( int x = 0; x < gui.diff.colCount(); x++) {
+			for( int y = 0; y < gui.diff.rowCount(); y++) {
+				minefield[x][y].setNeighbors(bombsAdjacent(x,y));
 			}
 		}
 		return minefield;
 	}
 	
 	//checks if coord is in the mines array
-	public boolean searchMine(int[][] mines, int x, int y) {
+	public boolean searchMine(boolean[][] mines, int x, int y) {
 		boolean isMine = false;
 		//walk through the array.
 		for (int i = 0; i < numberOfMines; i++) {
@@ -114,13 +100,28 @@ public class Minefield implements Difficulty {
 	
 	public void resetAll() {
 		//rows
-		for (int y = 0; y < diff.rowCount(); y++) { 
+		for (int y = 0; y < gui.diff.rowCount(); y++) { 
 			//cols
-			for (int x = 0; x < diff.colCount(); x++) {	
+			for (int x = 0; x < gui.diff.colCount(); x++) {	
 				minefield[x][y].setContent("?");
 			}
 		}
 	}
-	
-}
+	public int bombsAdjacent(int x, int y){
+      boolean containsBomb = bombs[x][y];
+      if(containsBomb){
+         return -1;
+      }
+      int adjacent = 0;
+      for(int i = x-1; i<=x+1; i++){
+         for(int j = y-1; j<=y+1; j++){
+            containsBomb = bombs[i][j];
+            if(containsBomb){
+               adjacent++;
+            }
+         }
+      }
+      return adjacent;
+   }
 
+}
