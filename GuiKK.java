@@ -7,7 +7,7 @@ import java.util.*;
 public class Gui extends JFrame {
 
 	//game & its settings
-	private Game game;
+	public Game game;
 	
 	//jbuttons
 	private JButton[][] buttons = new JButton[10][10]; //CHANGE BASED ON ROW/COL COUNT
@@ -123,6 +123,9 @@ public class Gui extends JFrame {
    int row = diff.colCount();
    int col = diff.rowCount();
    public boolean[][] flags = new boolean[row][col];
+   public boolean[][] bombs = new boolean[row][col];
+   public int x;
+   public int y;
    //use to record x and y of the click and which click it is.
       public void mousePressed(MouseEvent event){
               int x = event.getX();
@@ -134,7 +137,6 @@ public class Gui extends JFrame {
       public void whatToDo(int x, int y){
       int number = diff.getNumberOfMines();
       int flagCount = diff.getNumberOfMines();
-      boolean[][] bombs = new boolean[diff.colCount()][diff.rowCount()];
       Bombs bomb = new Bombs(bombs, x, y, number);
       int count = 0;
       //Left click
@@ -213,11 +215,11 @@ public class Gui extends JFrame {
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	private void initGame(Difficulty difficulty) {
+	private void initGame() {
 		hideAll();
 		enableAll();
 		startTimer();
-		game.newGame(difficulty);
+		game.newGame(diff);
 	}
 	
 	//asks player is s/he wants to start new game
@@ -227,11 +229,9 @@ public class Gui extends JFrame {
 		
       switch(startNew) {
 			case JOptionPane.YES_OPTION: 
-				String player = game.getPlayer();
-				Difficulty difficulty = game.getDifficulty();
-				
+				String player = game.getPlayer();				
 				//check if we should ask the player name and difficulty again.
-				while( player == null || difficulty == null || player.equals("") ) {
+				while( player == null || diff == null || player.equals("") ) {
 					player = "Player";
 					difficulty = askDifficulty();
 				}
@@ -404,11 +404,9 @@ public class Gui extends JFrame {
 			case JOptionPane.YES_OPTION: 
 			
 				String player = game.getPlayer();
-				Difficulty difficulty = game.getDifficulty();
-				
 				//check if we should ask for difficulty again.
-				if (difficulty == null) {
-					difficulty = askDifficulty();
+				if (diff == null) {
+					diff = askDifficulty();
 				}
 				
 				game.setPlayer(player);
