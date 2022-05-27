@@ -3,26 +3,14 @@ import javax.swing.*;
 
 //all info of current game kept in this class
 public class Game {
+   public Difficulty difficulty = new Difficulty();
 	//player (name)
 	private String player;
-   
-   //bombs
-   public boolean[][] bombs;
-   private int x;
-   private int y;
-   public int number;
-   Bombs b = new Bombs(bombs, x, y, number);
 	
 	//whether a game is running (true) or not (false).
 	private boolean playing; 
 	
-	//minefield
-	private Minefield minefield;
-	
-	//difficulty settings
-	public String diff;
-   Difficulty d = new Difficulty();
-	
+	//difficulty settings	
 	// timer settings
 	private Thread timer;
 	private int timeElapsed;
@@ -35,8 +23,7 @@ public class Game {
 	public Game(String player) {
 		setPlayer(player);
 		setPlaying(false);
-		setMinefield(new Minefield(d.getNumberOfMines()));
-		setDifficulty("Normal");
+		setMinefield(new Minefield(difficulty.getNumberOfMines()));
 		setLastScores(new String[4][2]);
 		setScore(0);
 		resetScores();		
@@ -64,16 +51,20 @@ public class Game {
 		return playing;
 	}
 	
-	private void setMinefield(Minefield minefield) {
-		this.minefield = minefield;
+/*	private void setMinefield() {
+		
 	}
 	
 	public Minefield getMinefield() {
 		return minefield;
 	}
+*/	
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
+	}
 	
-	public String getDifficulty() {
-		return diff;
+	public Difficulty getDifficulty() {
+		return difficulty;
 	}
 	
 	public Thread getTimer() {
@@ -131,34 +122,54 @@ public class Game {
 		//new minefield
 		setMinefield( new Minefield( difficulty.getNumberOfMines() ) );
 		//set difficulty.
-		diff = "Normal";
+		setDifficulty(difficulty);
 		//start game (timer).
 		setPlaying(true);
 		//set score.
 		setScore(0);		
 	}
-		
-	//checks if game is finished
+	
+	//if player clicks on 0, surrounding fields revealed
+	public void findZeroes(JButton[][] buttons, int xCo, int yCo) {
+		int neighbors;
+		//col
+		for(int x = minefield.makeValidCoordinate(xCo - 1); x <= minefield.makeValidCoordinate(xCo + 1); x++) {	
+			//row
+			for(int y = minefield.makeValidCoordinate(yCo - 1); y <= minefield.makeValidCoordinate(yCo + 1); y++) {
+				if(minefield.getMinefield()[x][y].getContent().equals("?")) {
+					//get the # neighbors of the current (neighboring) field.
+					neighbors = minefield.getMinefield()[x][y].getNeighbors();
+					//reveal ^
+					minefield.getMinefield()[x][y].setContent(Integer.toString(neighbors));
+					buttons[x][y].setText(Integer.toString(neighbors));
+					if (neighbors == 0){
+						buttons[x][y].setBackground(Color.lightGray);
+						findZeroes(buttons, x, y);
+					} else {
+						buttons[x][y].setBackground(Color.gray);
+					}
+				}	
+			}
+		}
+	}
+	
+	//check to see if game is finished
 	public boolean isFinished() {
 		boolean isFinished = true;
 		String fieldSolution;
-		
 		//rows
-		for (int y = 0; y < d.rowCount(); y++) { 
+		for (int y = 0; y < Difficulty.rowCount; y++) { 
 			//cols
-			for (int x = 0; x < d.colCount(); x++) {	
-			
+			for (int x = 0; x < Difficulty.colCount; x++) {	
 				//fieldContent contains the solution of a field
-				//if a game is solved, the content of each field on the board must match fieldConten
+				//if a game is solved, the content of each field on the board must match fieldContent
 				fieldSolution = Integer.toString(minefield.getMinefield()[x][y].getNeighbors());
-				if(minefield.getMinefield()[x][y].getMine()) fieldSolution = "F";
-			
-				//compare the player's "answer" to the solution
-				if(!minefield.getMinefield()[x][y].getContent().equals(fieldSolution)) {
-					//field not solved yet
+				if (minefield.getMinefield()[x][y].getMine()) fieldSolution = "F";
+				//compare the player's "answer" to the solution.
+				if (!minefield.getMinefield()[x][y].getContent().equals(fieldSolution)) {
 					isFinished = false;
-					x = d.colCount();
-					y = d.rowCount();
+					x = difficulty.colCount();
+					y = difficulty.rowCount();
 				}
 			
 			}
@@ -168,8 +179,10 @@ public class Game {
 		return isFinished;
 	}
 	
-	public void gameOver() {
+	public void gameOver()
+	{
 		setPlayer(null);
+		setDifficulty(null);
 	}
 	
 	//ends game
