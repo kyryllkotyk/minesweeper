@@ -381,4 +381,17 @@ public class Gui extends JFrame {
 			case JOptionPane.CLOSED_OPTION: break;
 		}
 	}
+	public int time;
+   	public java.util.Timer clock = new Timer();
+   	//Returns the value of the time int
+   	public int getTime(){
+      		return time;
+   	}
+   	//This handles the timer
+   	TimerTask task = new TimerTask(){
+      		public void run(){
+        time++;
+      	}
+   };
+}
 }
