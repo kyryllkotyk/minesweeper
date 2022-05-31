@@ -396,4 +396,3 @@ public class Gui extends JFrame {
       	}
    };
 }
-}
