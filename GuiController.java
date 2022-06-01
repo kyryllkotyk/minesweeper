@@ -27,22 +27,25 @@ public class GuiController{
       frame.add(gui, BorderLayout.CENTER);
       frame.setVisible(true);
    }
-   /*public int click;
-   int row = diff.colCount();
-   int col = diff.rowCount();
+   public int click;
+   public int row = diff.colCount();
+   public int col = diff.rowCount();
    public boolean[][] flags = new boolean[row][col];
+   public boolean[][] bombs = new boolean[row][col];
+   public int x1;
+   public int y1;
    //use to record x and y of the click and which click it is.
       public void mousePressed(MouseEvent event){
-              int x = event.getX();
-              int y = event.getY();
+              int x1 = event.getX();
+              int y1 = event.getY();
               click = event.getButton();
-              whatToDo(x, y);
+              whatToDo();
       }
       
-      public void whatToDo(int x, int y){
+      public void whatToDo(){
       int number = diff.getNumberOfMines();
-      boolean[][] bombs = new boolean[diff.colCount()][diff.rowCount()];
-      Bombs bomb = new Bombs(bombs, x, y, number);
+      int flagCount = diff.getNumberOfMines();
+      Bombs bomb = new Bombs(bombs, x1, y1, number);
       int count = 0;
       //Left click
          if(click == 1){
@@ -50,45 +53,45 @@ public class GuiController{
             //diff.tile(bomb.bombsAdjacent(x, y));
             //Bomb might need to be changed to GUI !*!
             //bomb.leftClick();
+            System.out.print("Damn");
          }
          //Middle click
          if(click == 2){
          //Runs through adjacent(and the tile clicked on) and checks for flags
-           for(int i = x - 1; i <= x + 1; i++){
-               for(int j = y - 1; j <= y + 1; j++){
+           for(int i = x1 - 1; i <= x1 + 1; i++){
+               for(int j = y1 - 1; j <= y1 + 1; j++){
                   //Counts the amount of flags in the proximity
-                  if(flags[x][y] == true){
+                  if(flags[x1][y1] == true){
                      count++;
                   }
                }
            }
            //Reveals the adjacent 
-           if(count == bomb.bombsAdjacent(x,y)){
-               for(int i = x - 1; i <= x + 1; i++){
-                     for(int j = y - 1; i <= y + 1; j++){
- /* Might need to change from diff to GUI           if(diff.isRevealed() == false){
-                                 int x1 = x;
-                                 int y1 = y;
-                                 x = i;
-                                 y = j;
- /* Might need to change from diff to GUI  diff.tile(bomb.bombsAdjacent(x, y));
-                                 x = x1;
-                                 y = y1;
+         /*  if(count == bomb.bombsAdjacent(x1,y1)){
+               for(int i = x1 - 1; i <= x1 + 1; i++){
+                     for(int j = y1 - 1; j <= y1 + 1; j++){
+                         if(isRevealed() == false){
+                                 int x2 = x1;
+                                 int y2 = y1;
+                                 x1 = i;
+                                 y1 = j;
+                                 tile(bomb.bombsAdjacent(x1, y1));
+                                 x1 = x2;
+                                 y1 = y2;
                            }
                      }
                }
            }
-         }
+        */ }
          //Right click
          if(click == 3){
-            flags[x][y] = !flags[x][y];
-            if(flags[x][y] == true){
+            flags[x1][y1] = !flags[x1][y1];
+            if(flags[x1][y1] == true){
                flagCount--;
             }
             else{
                flagCount++;
             }
          }
-      }*/
-
+      }
 }
