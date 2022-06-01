@@ -9,6 +9,11 @@ public class GuiController{
    public GuiController(Difficulty dif){
       diff = dif;
       flagCount = diff.getNumberOfMines();
+      row = diff.colCount();
+      col = diff.rowCount();
+   }
+   public void newTime(int t){
+      time = t;
    }
    public void runGame(){
       JFrame frame = new JFrame();
@@ -28,8 +33,8 @@ public class GuiController{
       frame.setVisible(true);
    }
    public int click;
-   public int row = diff.colCount();
-   public int col = diff.rowCount();
+   public int row;
+   public int col;
    public boolean[][] flags = new boolean[row][col];
    public boolean[][] bombs = new boolean[row][col];
    public int x1;
