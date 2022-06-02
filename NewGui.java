@@ -18,6 +18,7 @@ public class NewGui extends JPanel{
       diff = new Difficulty();
       x=0;
       y=0;
+      grid = new int[diff.colCount()][diff.rowCount()];
    }
    public void setSize(int xNew, int yNew){
       x=xNew;
@@ -28,9 +29,18 @@ public class NewGui extends JPanel{
    }
    public void paintComponent(Graphics g){
       super.paintComponent(g);
-      Color evenSquares = new Color(0,255,0);
+      Color evenSquares = new Color(0,100,0);
       Color oddSquares = new Color(0,168,0);
-      Color background = new Color(0,100,0);
+      Color lightGray = new Color(204, 204, 204);
+      Color gray = new Color(153, 153, 153);
+      Color one = new Color(10,100,255);
+      Color two = new Color(10,100,255);
+      Color three = new Color(10,100,255);
+      Color four = new Color(10,100,255);
+      Color five = new Color(10,100,255);
+      Color six = new Color(10,100,255);
+      Color seven = new Color(10,100,255);
+      Color eight = new Color(10,100,255);
       int tile = diff.tileSize();
       g.setColor(oddSquares);
       g.fillRect(0,0,x,y-60);
@@ -44,68 +54,25 @@ public class NewGui extends JPanel{
             }
          }
       }
-      /*for(int i = 0; i<grid.length; i++){
-         for(int j = 0; j<grid[i].length; j++){
+      Font font = g.getFont().deriveFont( 30.0f );
+      g.setFont( font );
+      //These are an example of the code needed to write the numbers
+      //they are not going to be part of the final version
+      //g.setColor(one);
+      // g.drawString("1",80,80);
+      for(int i = 0; i<diff.colCount(); i++){
+         for(int j = 0; j<diff.rowCount(); j++){
             if(i%2==j%2){
-               
+               g.setColor(gray);
             }
             else{
-               
+               g.setColor(lightGray);
+            }
+            if(grid[i][j]!=0){
+               g.fillRect(i*tile,j*tile,tile,tile);
+               g.drawString(""+grid[i][j],i*tile+tile/3,j*tile+tile-10);
             }
          }
-      }*/
-
-   }
-   //jbuttons
-	public JButton[][] buttons = new JButton[diff.colCount()][diff.rowCount()];
-   buttons[x1][y1] = new JButton;
-   JPanel buttonPanel;
-   //finish making buttons out of coordinates. figure out how to do this.
-   
-   public boolean revealed[][];
-   public void revealTile(int bombsAdjacent(x1, y1)) {
-      revealed[x1][y1] = true;
-      //sets background color to beige or sand dollar
-      buttons[x1][y1].setBackground(245, 245, 220);
-      if((x1+y1)%2==0) {
-         buttons[x1][y1].setBackground(194, 178, 128);
       }
-      if(bombs[x1][y1] == true) { //checks if bomb
-         buttons[x1][y1].setBackground(Color.RED);
-         buttons[x1][y1].setText("M"); //change to image later?
-      } else if (bombsAdjacent > 0) { 
-            //go through each value of bombs adjacent to assign foreground color
-            if (bombsAdjacent == 1) {
-               buttons[x1][y1].setForeground(Color.BLUE); 
-            }
-            if (bombsAdjacent == 2) {
-               buttons[x1][y1].setForeground(Color.GREEN); 
-            }
-            if (bombsAdjacent == 3) {
-               buttons[x1][y1].setForeground(Color.RED); 
-            }
-            if (bombsAdjacent == 4) {
-               buttons[x1][y1].setForeground(Color.PURPLE); 
-            }
-            if (bombsAdjacent == 5) {
-               buttons[x1][y1].setForeground(Color.WHITE);
-            }
-            if (bombsAdjacent == 6) {
-               buttons[x1][y1].setForeground(Color.WHITE);
-            }
-            if (bombsAdjacent == 7) {
-               buttons[x1][y1].setForeground(Color.WHITE);
-            }
-            if (bombsAdjacent == 8) {
-               buttons[x1][y1].setForeground(Color.WHITE);
-            }
-            buttons[x1][y1].setText(bombsAdjacent(x1, y1));
-      } else { //nothing; make content blank
-         buttons[x1][y1].setText("");
-      }
-   }
-   
-   public boolean isRevealed(x1, y1) {
-      return revealed[x1][y1];
    }
 }
