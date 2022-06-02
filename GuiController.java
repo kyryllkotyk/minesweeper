@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.event.*;
 
-public class GuiController{
+public class GuiController extends MouseInputAdapter{
    private int time;
    private int flagCount;
    private Difficulty diff;
@@ -11,12 +12,15 @@ public class GuiController{
       flagCount = diff.getNumberOfMines();
       row = diff.colCount();
       col = diff.rowCount();
+      flags = new boolean[row][col];
+      bombs = new boolean[row][col];
    }
    public void newTime(int t){
       time = t;
    }
    public void runGame(){
       JFrame frame = new JFrame();
+      frame.addMouseListener(this);
       Difficulty diff = new Difficulty();
       int sizeX = diff.colCount()*diff.tileSize();
       int sizeY = diff.rowCount()*diff.tileSize()+60;
@@ -35,14 +39,14 @@ public class GuiController{
    public int click;
    public int row;
    public int col;
-   public boolean[][] flags = new boolean[row][col];
-   public boolean[][] bombs = new boolean[row][col];
+   public boolean[][] flags;
+   public boolean[][] bombs;
    public int x1;
    public int y1;
    //use to record x and y of the click and which click it is.
       public void mousePressed(MouseEvent event){
-              int x1 = event.getX();
-              int y1 = event.getY();
+               x1 = event.getX()/diff.tileSize();
+               y1 = (event.getY()-56)/diff.tileSize();
               click = event.getButton();
               whatToDo();
       }
@@ -58,7 +62,6 @@ public class GuiController{
             //diff.tile(bomb.bombsAdjacent(x, y));
             //Bomb might need to be changed to GUI !*!
             //bomb.leftClick();
-            System.out.print("Damn");
          }
          //Middle click
          if(click == 2){
@@ -99,4 +102,4 @@ public class GuiController{
             }
          }
       }
-}
+}        
