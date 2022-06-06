@@ -14,6 +14,7 @@ public class GuiController extends MouseInputAdapter{
       col = diff.rowCount();
       flags = new boolean[row][col];
       bombs = new boolean[row][col];
+      numbers = new int[row][col];
    }
    public void newTime(int t){
       time = t;
@@ -30,17 +31,19 @@ public class GuiController extends MouseInputAdapter{
       JPanel north = new JPanel(new FlowLayout());
       north.add(new JLabel("flags:"+flagCount+"     time:"+time));
       frame.add(north, BorderLayout.NORTH);
-      NewGui gui = new NewGui();
+      gui = new NewGui();
       gui.setSize(sizeX,sizeY);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.add(gui, BorderLayout.CENTER);
       frame.setVisible(true);
    }
+   public NewGui gui;
    public int click;
    public int row;
    public int col;
    public boolean[][] flags;
    public boolean[][] bombs;
+   public int[][] numbers;
    public int x1;
    public int y1;
    //use to record x and y of the click and which click it is.
@@ -58,10 +61,13 @@ public class GuiController extends MouseInputAdapter{
       int count = 0;
       //Left click
          if(click == 1){
+            System.out.print("left");
             //Might need to be changed to GUI !*!
             //diff.tile(bomb.bombsAdjacent(x, y));
             //Bomb might need to be changed to GUI !*!
             //bomb.leftClick();
+            numbers[x1][y1] = bomb.bombsAdjacent(x1, y1);
+            gui.updateGrid(numbers);
          }
          //Middle click
          if(click == 2){
@@ -101,5 +107,6 @@ public class GuiController extends MouseInputAdapter{
                flagCount++;
             }
          }
+         gui.repaint();
       }
 }        
