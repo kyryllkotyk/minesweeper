@@ -7,6 +7,7 @@ public class GuiController extends MouseInputAdapter{
    private int time;
    private int flagCount;
    private Difficulty diff;
+   public Bombs bomb;
    public GuiController(Difficulty dif){
       diff = dif;
       flagCount = diff.getNumberOfMines();
@@ -53,11 +54,12 @@ public class GuiController extends MouseInputAdapter{
               click = event.getButton();
               whatToDo();
       }
-      
       public void whatToDo(){
       int number = diff.getNumberOfMines();
       int flagCount = diff.getNumberOfMines();
-      Bombs bomb = new Bombs(bombs, x1, y1, number);
+      if(bomb ==null){
+         bomb = new Bombs(bombs, x1, y1, number);
+      }
       int count = 0;
       //Left click
          if(click == 1){
