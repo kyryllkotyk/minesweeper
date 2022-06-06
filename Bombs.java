@@ -12,7 +12,7 @@ public class Bombs{
          int x1 = r.nextInt(bombs.length);
          int y1 = r.nextInt(bombs[0].length);
          if(!(x1<=x+1 && y1<=y+1 && x1>=x-1 && y1>=y-1) && !bombs[x1][y1]){
-            bombs[x1][y1] = true;
+            grid[x1][y1] = true;
             bombsGenerated++;
          }
       }
@@ -28,7 +28,9 @@ public class Bombs{
       int adjacent = 0;
       for(int i = x-1; i<=x+1; i++){
          for(int j = y-1; j<=y+1; j++){
-            containsBomb = grid[i][j];
+            if(!(i<0 || j<0 || i>=grid.length-1 || j>=grid[0].length-1)){
+               containsBomb = grid[i][j];
+            }
             if(containsBomb){
                adjacent++;
             }
