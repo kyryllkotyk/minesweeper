@@ -5,7 +5,8 @@ import java.awt.event.*;
 import java.util.*;
 
 public class NewGui extends JPanel{
-   private Difficulty diff;
+   private Difficulty diff = new Difficulty();
+   GuiController gui = new GuiController(diff);
    private int x;
    private int y;
    private int grid[][];
@@ -15,7 +16,6 @@ public class NewGui extends JPanel{
       y=0;
    }
    public NewGui(){
-      diff = new Difficulty();
       x=0;
       y=0;
       grid = new int[diff.colCount()][diff.rowCount()];
@@ -28,6 +28,7 @@ public class NewGui extends JPanel{
       grid = tiles;
    }
    public void paintComponent(Graphics g){
+      int b=0;
       super.paintComponent(g);
       Color evenSquares = new Color(28,119,34);
       Color oddSquares = new Color(11,152,20);
@@ -41,6 +42,8 @@ public class NewGui extends JPanel{
       Color six = new Color(55,185,172);
       Color seven = new Color(0,0,0);
       Color eight = new Color(82,97,95);
+      Color negative = new Color(255, 255, 255);
+      Color zero = new Color(150,150,150);
       int tile = diff.tileSize();
       g.setColor(oddSquares);
       g.fillRect(0,0,x,y-60);
@@ -69,6 +72,7 @@ public class NewGui extends JPanel{
                g.setColor(lightGray);
             }
             if(grid[i][j]!=0){
+               b++;
                g.fillRect(i*tile,j*tile,tile,tile);
                if(grid[i][j] == 1){
                   g.setColor(one);
@@ -94,9 +98,21 @@ public class NewGui extends JPanel{
                else if(grid[i][j] == 8){
                   g.setColor(eight);
                }
+               else if(grid[i][j] == -1){
+                  g.setColor(negative);
+               }
+              
                g.drawString(""+grid[i][j],i*tile+tile/3,j*tile+tile-10);
             }
+         else{
+             if(b != 0){
+             g.setColor(gray);
+             g.fillRect(i*tile,j*tile,tile,tile);
+             System.out.print(".");
          }
+         }
+          
       }
+     }
    }
 }
