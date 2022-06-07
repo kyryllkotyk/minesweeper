@@ -65,6 +65,9 @@ public class GuiController extends MouseInputAdapter{
          if(click == 1){
             System.out.print("left");
             numbers[x1][y1] = bomb.bombsAdjacent(x1, y1);
+            if(numbers[x1][y1] == 0){
+               numbers[x1][y1] = 9;
+            }
             gui.updateGrid(numbers);
          }
          //Middle click
