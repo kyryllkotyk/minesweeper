@@ -28,7 +28,6 @@ public class NewGui extends JPanel{
       grid = tiles;
    }
    public void paintComponent(Graphics g){
-      int b=0;
       super.paintComponent(g);
       Color evenSquares = new Color(28,119,34);
       Color oddSquares = new Color(11,152,20);
@@ -72,7 +71,6 @@ public class NewGui extends JPanel{
                g.setColor(lightGray);
             }
             if(grid[i][j]!=0){
-               b++;
                g.fillRect(i*tile,j*tile,tile,tile);
                if(grid[i][j] == 1){
                   g.setColor(one);
@@ -104,13 +102,6 @@ public class NewGui extends JPanel{
               
                g.drawString(""+grid[i][j],i*tile+tile/3,j*tile+tile-10);
             }
-         else{
-             if(b != 0){
-             g.setColor(gray);
-             g.fillRect(i*tile,j*tile,tile,tile);
-             System.out.print(".");
-         }
-         }
           
       }
      }
