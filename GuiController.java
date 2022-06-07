@@ -64,10 +64,6 @@ public class GuiController extends MouseInputAdapter{
       //Left click
          if(click == 1){
             System.out.print("left");
-            //Might need to be changed to GUI !*!
-            //diff.tile(bomb.bombsAdjacent(x, y));
-            //Bomb might need to be changed to GUI !*!
-            //bomb.leftClick();
             numbers[x1][y1] = bomb.bombsAdjacent(x1, y1);
             gui.updateGrid(numbers);
          }
