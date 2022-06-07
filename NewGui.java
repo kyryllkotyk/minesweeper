@@ -10,7 +10,7 @@ public class NewGui extends JPanel{
    private int x;
    private int y;
    private int grid[][];
-   public NewGui(Difficulty dif){
+   public NewGui(Difficulty dif, int tiles[][]){
       diff = dif;
       x=0;
       y=0;
@@ -70,8 +70,10 @@ public class NewGui extends JPanel{
             else{
                g.setColor(lightGray);
             }
-            if(grid[i][j]!=0){
+            if(grid[i][j] != 0){
                g.fillRect(i*tile,j*tile,tile,tile);
+            }
+            if(grid[i][j]!=0){
                if(grid[i][j] == 1){
                   g.setColor(one);
                }
