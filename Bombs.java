@@ -30,9 +30,9 @@ public class Bombs{
          for(int j = y-1; j<=y+1; j++){
             if(!(i<0 || j<0 || i>grid.length-1 || j>grid[0].length-1)){
                containsBomb = grid[i][j];
-            }
-            if(containsBomb){
-               adjacent++;
+               if(containsBomb){
+                  adjacent++;
+               }
             }
          }
       }
