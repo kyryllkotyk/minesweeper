@@ -65,8 +65,26 @@ public class GuiController extends MouseInputAdapter{
       if(click == 1){
          System.out.print("left");
          numbers[x1][y1] = bomb.bombsAdjacent(x1, y1);
+         int x2 = x1;
+         int y2 = y1;
          if(numbers[x1][y1] == 0){
             numbers[x1][y1] = 9;
+            for(int i = x1 - 1; i <= x1 + 1; i++){
+               for(int j = y1 - 1; j <= y1 + 1; j++){
+                  if(i >= 0 && j >= 0 && i <= 17 && j <= 13){
+                     x2 = i;
+                     y2 = j;  
+                     numbers[x2][y2] = bomb.bombsAdjacent(x2,y2);
+                     if(numbers[x2][y2] == 0){
+                        numbers[x2][y2] = 9;
+                     }
+                     //if 0, x3 y3, then replace x1 y1 with it.
+                  }
+               }
+            }
+         
+            x1 = x2;
+            y1 = y2;
          }
          gui.updateGrid(numbers);
       }
@@ -115,5 +133,4 @@ public class GuiController extends MouseInputAdapter{
          System.out.print("right");
       }
       gui.repaint();
-   }
-}
+   }}
