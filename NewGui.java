@@ -105,9 +105,8 @@ public class NewGui extends JPanel{
                g.drawString(""+grid[i][j],i*tile+tile/3,j*tile+tile-10);
             }
             if(grid[i][j] == 10){
-            g.setColor(black);
-               g.drawLine(i*tile,j*tile,i*tile+tile, j*tile+tile);
-               g.drawLine(i*tile+tile,j*tile,i*tile, j*tile+tile);
+               g.setColor(black);
+               g.fillRect(i*tile,j*tile,tile,tile);
             }
          }
       }
