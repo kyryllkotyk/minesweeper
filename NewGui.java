@@ -29,6 +29,7 @@ public class NewGui extends JPanel{
    }
    public void paintComponent(Graphics g){
       super.paintComponent(g);
+      Color black = new Color(0,0,0);
       Color evenSquares = new Color(28,119,34);
       Color oddSquares = new Color(11,152,20);
       Color lightGray = new Color(198, 206, 123);
@@ -70,10 +71,10 @@ public class NewGui extends JPanel{
             else{
                g.setColor(lightGray);
             }
-            if(grid[i][j] != 0){
+            if(grid[i][j] != 0 && grid[i][j] != 10){
                g.fillRect(i*tile,j*tile,tile,tile);
             }
-            if(grid[i][j]!=0){
+            if(grid[i][j]!=0 && grid[i][j] != 10){
                if(grid[i][j] == 1){
                   g.setColor(one);
                }
@@ -101,11 +102,14 @@ public class NewGui extends JPanel{
                else if(grid[i][j] == -1){
                   g.setColor(negative);
                }
-              
                g.drawString(""+grid[i][j],i*tile+tile/3,j*tile+tile-10);
             }
-          
+            if(grid[i][j] == 10){
+            g.setColor(black);
+               g.drawLine(i*tile,j*tile,i*tile+tile, j*tile+tile);
+               g.drawLine(i*tile+tile,j*tile,i*tile, j*tile+tile);
+            }
+         }
       }
-     }
    }
 }
