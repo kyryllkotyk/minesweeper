@@ -47,7 +47,7 @@ public class GuiController extends MouseInputAdapter{
    //use to record x and y of the click and which click it is.
    public void mousePressed(MouseEvent event){
       x1 = event.getX()/diff.tileSize();
-      y1 = (event.getY()-30-diff.tileSize())/diff.tileSize();
+      y1 = (event.getY()-20-diff.tileSize())/diff.tileSize();
       click = event.getButton();
       whatToDo();
    }
@@ -77,6 +77,7 @@ public class GuiController extends MouseInputAdapter{
                         numbers[x2][y2] = bomb.bombsAdjacent(x2,y2);
                         if(numbers[x2][y2] == 0){
                            numbers[x2][y2] = 9;
+                           zero(i,j);
                         }
                      //if 0, x3 y3, then replace x1 y1 with it.
                      }
@@ -134,5 +135,22 @@ public class GuiController extends MouseInputAdapter{
          System.out.print("right");
       }
       gui.repaint();
+   }
+   public void zero(int x3, int y3){
+      for(int i = x3 - 1; i <= x3 + 1; i++){
+         for(int j = y3 - 1; j <= y3 + 1; j++){
+            if(i >= 0 && j >= 0 && i <= 17 && j <= 13){
+               int x2 = i;
+               int y2 = j;  
+               if(numbers[x2][y2] != 9){
+                  numbers[x2][y2] = bomb.bombsAdjacent(x2,y2);
+               }
+               if(numbers[x2][y2] == 0){
+                  numbers[x2][y2] = 9;
+                  zero(i,j);
+               }
+            }
+         }
+      }
    }
 }
