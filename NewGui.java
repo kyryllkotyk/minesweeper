@@ -9,16 +9,23 @@ public class NewGui extends JPanel{
    GuiController gui = new GuiController(diff);
    private int x;
    private int y;
+   private int time;
    private int grid[][];
-   public NewGui(Difficulty dif, int tiles[][]){
+   private int mines;
+   public NewGui(Difficulty dif){
       diff = dif;
       x=0;
       y=0;
+      mines = diff.getNumberOfMines();
+      grid = new int[diff.colCount()][diff.rowCount()];
    }
    public NewGui(){
       x=0;
       y=0;
       grid = new int[diff.colCount()][diff.rowCount()];
+   }
+   public void setTime(int t){
+      time = t;
    }
    public void setSize(int xNew, int yNew){
       x=xNew;
@@ -46,19 +53,26 @@ public class NewGui extends JPanel{
       Color zero = new Color(150,150,150);
       int tile = diff.tileSize();
       g.setColor(oddSquares);
-      g.fillRect(0,0,x,y-60);
+      g.fillRect(0,30,x,y-70);
       g.setColor(evenSquares);
+      mines = diff.getNumberOfMines();
       for(int i = 0; i<diff.colCount(); i++){
          for(int j = 0; j<diff.rowCount(); j++){
             if(((i+j)%2)==0){
                int x1 = i*tile;
                int y1 = j*tile;
-               g.fillRect(x1,y1,tile,tile);
+               g.fillRect(x1,y1+30,tile,tile);
+            }
+            if(grid[i][j] == 10){
+               mines--;
             }
          }
       }
-      Font font = g.getFont().deriveFont( 30.0f );
-      g.setFont( font );
+      Font font1 = g.getFont().deriveFont( 30.0f );
+      Font font2 = g.getFont().deriveFont( 18.0f );
+      g.setFont( font2 );
+      g.drawString("Time: "+time+"   Mines:"+mines,tile*diff.colCount()/2-60,18);
+      g.setFont( font1 );
       //These are an example of the code needed to write the numbers
       //they are not going to be part of the final version
       //g.setColor(one);
@@ -72,7 +86,7 @@ public class NewGui extends JPanel{
                g.setColor(lightGray);
             }
             if(grid[i][j] != 0 && grid[i][j] != 10){
-               g.fillRect(i*tile,j*tile,tile,tile);
+               g.fillRect(i*tile,j*tile+30,tile,tile);
             }
             if(grid[i][j]!=0 && grid[i][j] != 10){
                if(grid[i][j] == 1){
@@ -102,11 +116,11 @@ public class NewGui extends JPanel{
                else if(grid[i][j] == -1){
                   g.setColor(negative);
                }
-               g.drawString(""+grid[i][j],i*tile+tile/3,j*tile+tile-10);
+               g.drawString(""+grid[i][j],i*tile+tile/3,j*tile+tile+20);
             }
             if(grid[i][j] == 10){
                g.setColor(black);
-               g.fillRect(i*tile,j*tile,tile,tile);
+               g.fillRect(i*tile,j*tile+30,tile,tile);
             }
          }
       }
