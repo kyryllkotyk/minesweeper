@@ -14,17 +14,26 @@ Your score is the time it took you (the lower the better).
 
 
 How to run
+
 Because this program uses Java, make sure you have Java SE installed, preferably the latest version.
+
 Click the green "clone or download repository" button at the top right of this repository.
+
 Unless you have git installed on your computer, simply download the files rather than cloning.
+
 /**
 add instructions specific to this file
 **/
 
+
 Credits
+
 Lindquist, Eric
+
 Kotyk, Kyryll
+
 Bajenova, Alisa
+
 
 
 MIT License
