@@ -6,6 +6,7 @@ import javax.swing.event.*;
 public class GuiController extends MouseInputAdapter{
    private int time;
    private int flagCount;
+   private Time timer;
    private Difficulty diff;
    public Bombs bomb;
    public GuiController(Difficulty dif){
@@ -25,14 +26,10 @@ public class GuiController extends MouseInputAdapter{
       frame.addMouseListener(this);
       Difficulty diff = new Difficulty();
       int sizeX = diff.colCount()*diff.tileSize();
-      int sizeY = diff.rowCount()*diff.tileSize()+60;
+      int sizeY = diff.rowCount()*diff.tileSize()+70;
       frame.setSize(sizeX+11, sizeY);
       frame.setTitle("Minesweeper");
-      frame.setLayout(new BorderLayout());
-      JPanel north = new JPanel(new FlowLayout());
-      north.add(new JLabel("flags:"+flagCount+"     time:"+time));
-      frame.add(north, BorderLayout.NORTH);
-      gui = new NewGui();
+      gui = new NewGui(diff);
       gui.setSize(sizeX,sizeY);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.add(gui, BorderLayout.CENTER);
@@ -50,7 +47,7 @@ public class GuiController extends MouseInputAdapter{
    //use to record x and y of the click and which click it is.
    public void mousePressed(MouseEvent event){
       x1 = event.getX()/diff.tileSize();
-      y1 = (event.getY()-56)/diff.tileSize();
+      y1 = (event.getY()-30-diff.tileSize())/diff.tileSize();
       click = event.getButton();
       whatToDo();
    }
@@ -59,6 +56,8 @@ public class GuiController extends MouseInputAdapter{
       int flagCount = diff.getNumberOfMines();
       if(bomb ==null){
          bomb = new Bombs(bombs, x1, y1, number);
+         timer = new Time(gui);
+         timer.newGame();
       }
       int count = 0;
       //Left click
