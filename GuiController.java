@@ -4,6 +4,7 @@ import java.awt.event.*;
 import javax.swing.event.*;
 
 public class GuiController extends MouseInputAdapter{
+   public boolean isOver = false;
    private int time;
    private int flagCount;
    private Time timer;
@@ -62,8 +63,7 @@ public class GuiController extends MouseInputAdapter{
       int count = 0;
       //Left click
       if(click == 1){
-         System.out.print("left");
-         if(numbers[x1][y1] != 10){
+         if(bomb.bombsAdjacent(x1,y1) != -1){
             numbers[x1][y1] = bomb.bombsAdjacent(x1, y1);
             int x2 = x1;
             int y2 = y1;
@@ -87,8 +87,11 @@ public class GuiController extends MouseInputAdapter{
                x1 = x2;
                y1 = y2;
             }
+               gui.updateGrid(numbers);
          }
-         gui.updateGrid(numbers);
+         else{
+            gameOver();
+         }
       }
          //Middle click
       if(click == 2){
@@ -152,5 +155,19 @@ public class GuiController extends MouseInputAdapter{
             }
          }
       }
+   }
+   public void gameOver(){
+      JFrame frame1 = new JFrame();
+      frame1.setSize(300, 300);
+      frame1.setBackground(Color.black);
+      JLabel label = new JLabel("You lost!");
+      JPanel panel = new JPanel(new BorderLayout());
+      panel.setSize(300,300);
+      frame1.add(label);
+      JButton playAgain = new JButton("Play again");
+      panel.add(label, BorderLayout.SOUTH);
+      //make a thing that lets you replay(rerun runGame)
+      frame1.add(panel);
+      frame1.show();
    }
 }
