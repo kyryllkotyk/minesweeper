@@ -1,0 +1,11 @@
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.*;
+
+public class PlayAgainListener implements ActionListener{
+   public void actionPerformed(ActionEvent event){
+      Difficulty diff = new Difficulty();
+      GuiController gui = new GuiController(diff);
+      gui.runGame();
+   }
+}
