@@ -1,0 +1,8 @@
+import java.awt.event.*;
+import javax.swing.*;
+
+public class EndGameListener implements ActionListener{
+   public void actionPerformed(ActionEvent event){
+      System.exit(0);
+   }
+}
