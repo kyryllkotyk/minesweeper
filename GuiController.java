@@ -89,7 +89,18 @@ public class GuiController extends MouseInputAdapter{
                x1 = x2;
                y1 = y2;
             }
-               gui.updateGrid(numbers);
+            int winCondition = 40;
+            gui.updateGrid(numbers);
+            for(int i = 0; i<numbers.length; i++){
+               for(int j = 0; j<numbers[0].length; j++){
+                  if(numbers[i][j] == 0 || numbers[i][j] == 10){
+                     winCondition--;
+                  }
+               }
+            }
+            if(winCondition == 0){
+               youWin();
+            }
          }
          else{
             gameOver();
@@ -146,7 +157,7 @@ public class GuiController extends MouseInputAdapter{
          for(int j = y3 - 1; j <= y3 + 1; j++){
             if(i >= 0 && j >= 0 && i <= 17 && j <= 13){
                int x2 = i;
-               int y2 = j;  
+               int y2 = j; 
                if(numbers[x2][y2] != 9){
                   numbers[x2][y2] = bomb.bombsAdjacent(x2,y2);
                }
@@ -164,6 +175,28 @@ public class GuiController extends MouseInputAdapter{
       frame1.setSize(300, 300);
       frame1.setBackground(Color.black);
       JLabel label = new JLabel("You lost!");
+      JPanel panel = new JPanel(new BorderLayout());
+      panel.setSize(300,300);
+      frame1.add(label);
+      panel.add(label, BorderLayout.SOUTH);
+      panel.setLayout(new FlowLayout());
+      JButton playAgain = new JButton("Play again");
+      playAgain.addActionListener(new PlayAgainListener());
+      JButton exit = new JButton("Exit game");
+      exit.addActionListener(new EndGameListener());
+      panel.add(playAgain);
+      panel.add(exit);
+      frame1.add(panel);
+      frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame1.show();
+   }
+   public void youWin(){
+      int score = timer.getTime();
+      isOver = true;
+      JFrame frame1 = new JFrame();
+      frame1.setSize(300, 300);
+      frame1.setBackground(Color.black);
+      JLabel label = new JLabel("You won!    Time: " + score);
       JPanel panel = new JPanel(new BorderLayout());
       panel.setSize(300,300);
       frame1.add(label);
