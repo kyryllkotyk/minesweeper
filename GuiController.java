@@ -50,12 +50,14 @@ public class GuiController extends MouseInputAdapter{
       x1 = event.getX()/diff.tileSize();
       y1 = (event.getY()-20-diff.tileSize())/diff.tileSize();
       click = event.getButton();
-      whatToDo();
+      if(!isOver){
+         whatToDo();
+      }
    }
    public void whatToDo(){
       int number = diff.getNumberOfMines();
       int flagCount = diff.getNumberOfMines();
-      if(bomb ==null){
+      if(bomb == null){
          bomb = new Bombs(bombs, x1, y1, number);
          timer = new Time(gui);
          timer.newGame();
@@ -157,6 +159,7 @@ public class GuiController extends MouseInputAdapter{
       }
    }
    public void gameOver(){
+      isOver = true;
       JFrame frame1 = new JFrame();
       frame1.setSize(300, 300);
       frame1.setBackground(Color.black);
@@ -164,10 +167,16 @@ public class GuiController extends MouseInputAdapter{
       JPanel panel = new JPanel(new BorderLayout());
       panel.setSize(300,300);
       frame1.add(label);
-      JButton playAgain = new JButton("Play again");
       panel.add(label, BorderLayout.SOUTH);
-      //make a thing that lets you replay(rerun runGame)
+      panel.setLayout(new FlowLayout());
+      JButton playAgain = new JButton("Play again");
+      playAgain.addActionListener(new PlayAgainListener());
+      JButton exit = new JButton("Exit game");
+      exit.addActionListener(new EndGameListener());
+      panel.add(playAgain);
+      panel.add(exit);
       frame1.add(panel);
+      frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame1.show();
    }
 }
