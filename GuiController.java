@@ -107,30 +107,34 @@ public class GuiController extends MouseInputAdapter{
             }
          }
       }
-      //FOR THIS TO WORK, WE NEED AN ARRAY THAT REGISTERS WHICH ONES ARE REVEALED AND WHICH ONES DO NOT!!
          //Middle click
-     /* if(click == 2){
+     if(click == 2){
         int count = 0;
          //Runs through adjacent(and the tile clicked on) and checks for flags
          for(int i = x1 - 1; i <= x1 + 1; i++){
             for(int j = y1 - 1; j <= y1 + 1; j++){
                   //Counts the amount of flags in the proximity
-               if(flags[i][j] == true){
+            if(i >= 0 && j >= 0 && i <= 17 && j <= 13){    
+               if(numbers[i][j] == 10){
                   count++;
                }
+           }
+               
             }
          }
          System.out.print(count);
          if(count == bomb.bombsAdjacent(x1,y1)){
-               if(flags[x1][y1] == false){
+               if(numbers[x1][y1] != 10){
                   numbers[x1][y1] = bomb.bombsAdjacent(x1, y1);
-                  int x2 = x1;
-                  int y2 = y1;
-                  for(int i = x1 - 1; i <= x1 + 1; i++){
+                for(int i = x1 - 1; i <= x1 + 1; i++){
                        for(int j = y1 - 1; j <= y1 + 1; j++){
-                          if(flags[i][j] == false){
+                          
                            if(i >= 0 && j >= 0 && i <= 17 && j <= 13){ 
-                              numbers[i][j] = bomb.bombsAdjacent(x2,y2);
+                           if(flags[i][j] == false){
+                              numbers[i][j] = bomb.bombsAdjacent(i,j);
+                              if(numbers[i][j] == -1){
+                                 gameOver();
+                              }
                               if(numbers[i][j] == 0){
                                  numbers[i][j] = 9;
                                  zero(i,j);
@@ -140,8 +144,6 @@ public class GuiController extends MouseInputAdapter{
                        }
                      }
                   
-                     x1 = x2;
-                     y1 = y2;
                   }
                   gui.updateGrid(numbers);
                   for(int i = 0; i<numbers.length; i++){
@@ -154,13 +156,8 @@ public class GuiController extends MouseInputAdapter{
                   if(winCondition == 0){
                      youWin();
                   }
-               
-               else{
-                  gameOver();
-               }
-               }
             } 
-         */    
+           } 
          //Right click
       if(click == 3){
          flags[x1][y1] = !flags[x1][y1];
