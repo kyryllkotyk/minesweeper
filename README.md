@@ -34,7 +34,7 @@ Kotyk, Kyryll
 
 Bajenova, Alisa
 
-
+*What the fuck is this*
 
 MIT License
 
