@@ -37,8 +37,8 @@ public class NewGui extends JPanel{
    public void paintComponent(Graphics g){
       super.paintComponent(g);
       Color black = new Color(0,0,0);
-      Color evenSquares = new Color(28,119,34);
-      Color oddSquares = new Color(11,152,20);
+      Color evenSquares = new Color(162,230,72);
+      Color oddSquares = new Color(137,208,44);
       Color lightGray = new Color(198, 206, 123);
       Color gray = new Color(153, 153, 153);
       Color one = new Color(4,56,226);
@@ -116,7 +116,12 @@ public class NewGui extends JPanel{
                else if(grid[i][j] == -1){
                   g.setColor(negative);
                }
+               if(grid[i][j] != -1){
                g.drawString(""+grid[i][j],i*tile+tile/3,j*tile+tile+20);
+               }
+               else{
+                  g.drawString(""+"B", i*tile+tile/3,j*tile+tile+20);
+               }
             }
             if(grid[i][j] == 10){
                g.setColor(black);
